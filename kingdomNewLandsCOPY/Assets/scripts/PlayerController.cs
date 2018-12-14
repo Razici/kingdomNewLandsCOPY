@@ -19,9 +19,11 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.anyKey)
+
+        float moveHorizontal = Input.GetAxis("Horizontal");
+
+        if (moveHorizontal != 0)
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
 
             if (moveHorizontal < 0 && direction== 1)
             {
@@ -35,9 +37,18 @@ public class PlayerController : MonoBehaviour {
             }
             Vector2 movement = new Vector2(moveHorizontal, 0);
             transform.Translate(movement * speed * direction);
-            anim.SetTrigger("gallop");
-            return;
+
+            if (Input.GetKey("a") || Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) )
+            {
+                anim.SetTrigger("gallop");
+            }
+            if (!Input.GetKey("a") && !Input.GetKey("d") && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+            {
+                anim.SetTrigger("idle");
+            }
+
+            
         }
-        anim.SetTrigger("idle");
+        
     }
 }
